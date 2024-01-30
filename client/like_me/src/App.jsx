@@ -20,16 +20,9 @@ function App() {
    const agregarPost = async () => {
       try {
          const post = { titulo, imgSrc, descripcion };
-         // if (
-         //    titulo.trim() === '' ||
-         //    imgSrc.trim() === '' ||
-         //    descripcion.trim() === ''
-         // ) {
-         //    alert('Todos los campos son obligatorios.');
-         // } else {
+         // console.log('POST: ', post);
          await axios.post(urlBaseServer + '/posts', post);
          getPosts();
-         // }
       } catch (error) {
          console.log('Error en agregarPost: ', error);
       }

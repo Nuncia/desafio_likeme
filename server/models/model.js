@@ -4,7 +4,6 @@ export const obtenerTodosPosts = async () => {
    try {
       const query = 'SELECT * FROM posts';
       const { rows } = await pool.query(query);
-      // console.log('rows: ', rows);
       return rows;
    } catch (err) {
       console.log('Error al obtener los posts: ', err);

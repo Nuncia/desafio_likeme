@@ -16,16 +16,20 @@ app.get('/posts', async (req, res) => {
       res.json(posts);
    } catch (error) {
       console.log('Error al obtener los posts: ', error);
-      return res.status(500).send('Error al obtener los posts');
+      return res.status(500).json({ message: 'Error interno del servidor.' });
    }
 });
 
 app.post('/posts', async (req, res) => {
    try {
       const { titulo, imgSrc, descripcion } = req.body;
+      console.log(titulo, imgSrc, descripcion);
       if (!titulo || !imgSrc || !descripcion) {
-         return res.status(400).send('Todos los campos son obligatorios');
+         return res
+            .status(400)
+            .json({ message: 'Todos los campos son obligatorios.' });
       }
+      const post = { titulo, imgSrc, descripcion };
       console.log('body: ', req.body);
       const nuevoPost = await crearPost(post);
       res.json(nuevoPost);
