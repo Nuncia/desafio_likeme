@@ -13,20 +13,31 @@ function App() {
    const [posts, setPosts] = useState([]);
 
    const getPosts = async () => {
-      const { data: posts } = await axios.get(urlBaseServer + '/posts');
-      setPosts([...posts]);
+      const posts = await axios.get(urlBaseServer + '/posts');
+      console.log('getPosts: ', posts);
+
+      setPosts([...posts.data]);
    };
 
    const agregarPost = async () => {
-      try {
-         const post = { titulo, imgSrc, descripcion };
-         // console.log('POST: ', post);
-         await axios.post(urlBaseServer + '/posts', post);
-         getPosts();
-      } catch (error) {
-         console.log('Error en agregarPost: ', error);
-      }
+      const post = { titulo, imgSrc, descripcion };
+      console.log(post);
+      await axios.post(urlBaseServer + '/posts', post);
+      // console.log(respuesta);
+      getPosts();
    };
+
+   // const agregarPost = async () => {
+   //    try {
+   //       const post = { titulo, imgSrc, descripcion };
+   //       // console.log('POST: ', post);
+   //       await axios.post(urlBaseServer + '/posts', post);
+   //       getPosts();
+   //    } catch (error) {
+   //       console.log('Error en agregarPost: ', error);
+   //       return alert('Error en agregarPost: ', error);
+   //    }
+   // };
 
    // este método se utilizará en el siguiente desafío
    const like = async (id) => {
@@ -56,15 +67,19 @@ function App() {
                   agregarPost={agregarPost}
                />
             </div>
-            <div className="col-12 col-sm-8 px-5 row posts align-items-start">
-               {posts.map((post, i) => (
-                  <Post
-                     key={i}
-                     post={post}
-                     like={like}
-                     eliminarPost={eliminarPost}
-                  />
-               ))}
+            <div className="col-12 col-sm-8 px-5 row posts align-items-start gap-3">
+               {posts.length > 0 ? (
+                  posts.map((post, i) => (
+                     <Post
+                        key={i}
+                        post={post}
+                        like={like}
+                        eliminarPost={eliminarPost}
+                     />
+                  ))
+               ) : (
+                  <p>No hay post disponibles</p>
+               )}
             </div>
          </div>
       </div>
