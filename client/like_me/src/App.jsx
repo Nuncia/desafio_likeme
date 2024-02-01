@@ -23,15 +23,16 @@ function App() {
          .catch((error) => {
             console.log(error);
          });
-
-      // const { data: posts } = await axios.get(urlBaseServer + '/posts');
-      // console.log('getPosts: ', posts);
-      // setPosts([...posts]);
    };
 
    const agregarPost = async () => {
       const post = { titulo, url: imgSrc, descripcion };
-      await axios.post(urlBaseServer + '/posts', post);
+      const respuesta = await axios.post(urlBaseServer + '/posts', post);
+      const claves = respuesta.data;
+      console.log(claves.respuesta);
+      if (claves.respuesta.error) {
+         alert('Todos los campos obligatorios.');
+      }
       getPosts();
    };
 

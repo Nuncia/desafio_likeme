@@ -43,9 +43,13 @@ app.post('/posts', async (req, res) => {
       const { titulo, url, descripcion } = req.body;
       console.log(titulo, url, descripcion);
       if (!titulo || !url || !descripcion) {
-         return res.status(400).json({
-            status: 'Bad request',
-            msg: 'No se encuentran datos',
+         const respuesta = {
+            status: 'Faltan datos',
+            msg: 'Todos los campos son requeridos.',
+            error: true,
+         };
+         res.json({
+            respuesta,
          });
       } else {
          const post = { titulo, url, descripcion };
