@@ -40,15 +40,15 @@ app.get('/posts', async (req, res) => {
 
 app.post('/posts', async (req, res) => {
    try {
-      const { titulo, imgSrc, descripcion } = req.body;
-      console.log(titulo, imgSrc, descripcion);
-      if (!titulo || !imgSrc || !descripcion) {
+      const { titulo, url, descripcion } = req.body;
+      console.log(titulo, url, descripcion);
+      if (!titulo || !url || !descripcion) {
          return res.status(400).json({
             status: 'Bad request',
             msg: 'No se encuentran datos',
          });
       } else {
-         const post = { titulo, imgSrc, descripcion };
+         const post = { titulo, url, descripcion };
          const nuevoPost = await crearPost(post);
          // res.json(nuevoPost);
          res.status(200).json({ data: nuevoPost });

@@ -15,13 +15,11 @@ export const crearPost = async (post) => {
    try {
       const query =
          'INSERT INTO posts (titulo, img, descripcion, likes) VALUES ($1, $2, $3,$4) RETURNING *';
-      const values = [post.titulo, post.imgSrc, post.descripcion, 0];
+      const values = [post.titulo, post.url, post.descripcion, 0];
       const { rowCount, rows } = await pool.query(query, values);
-      console.log(rows);
       return rows;
    } catch (error) {
       throw new Error(error);
-      // console.log('Error al crear el post: ', error);
    }
 };
 obtenerTodosPosts();

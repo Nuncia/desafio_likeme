@@ -2,8 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Form from './components/Form';
 import Post from './components/Post';
-import { response } from 'express';
-// import { axios } from 'axios';
 
 const urlBaseServer = 'http://localhost:3001';
 
@@ -32,31 +30,10 @@ function App() {
    };
 
    const agregarPost = async () => {
-      const post = { titulo, imgSrc, descripcion };
-      axios.post(`http://localhost:3001/posts`, post).then((response) => {
-         console.log(response.data);
-      });
+      const post = { titulo, url: imgSrc, descripcion };
+      await axios.post(urlBaseServer + '/posts', post);
+      getPosts();
    };
-
-   // const agregarPost = async () => {
-   //    const post = { titulo, imgSrc, descripcion };
-   //    console.log(post);
-   //    const respuesta = await axios.post(urlBaseServer + '/posts', post);
-   //    console.log(respuesta);
-   //    getPosts();
-   // };
-
-   // const agregarPost = async () => {
-   //    try {
-   //       const post = { titulo, imgSrc, descripcion };
-   //       // console.log('POST: ', post);
-   //       await axios.post(urlBaseServer + '/posts', post);
-   //       getPosts();
-   //    } catch (error) {
-   //       console.log('Error en agregarPost: ', error);
-   //       return alert('Error en agregarPost: ', error);
-   //    }
-   // };
 
    // este método se utilizará en el siguiente desafío
    const like = async (id) => {
@@ -86,19 +63,15 @@ function App() {
                   agregarPost={agregarPost}
                />
             </div>
-            <div className="col-12 col-sm-8 px-5 row posts align-items-start gap-3">
-               {posts.length > 0 ? (
-                  posts.map((post, i) => (
-                     <Post
-                        key={i}
-                        post={post}
-                        like={like}
-                        eliminarPost={eliminarPost}
-                     />
-                  ))
-               ) : (
-                  <p>No hay post disponibles</p>
-               )}
+            <div className="col-12 col-sm-8 px-5 row posts align-items-start">
+               {posts.map((post, i) => (
+                  <Post
+                     key={i}
+                     post={post}
+                     like={like}
+                     eliminarPost={eliminarPost}
+                  />
+               ))}
             </div>
          </div>
       </div>
