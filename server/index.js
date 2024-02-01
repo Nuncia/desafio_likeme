@@ -27,7 +27,7 @@ app.get('/posts', async (req, res) => {
          posts: posts.length > 0 ? posts : [],
       });
    } catch (error) {
-      console.log('Error al obtener los posts: ', error);
+      // console.log('Error al obtener los posts: ', error);
       const respuesta = {
          status: 'Error desconocido',
          msg: 'Error interno desconocido',
@@ -41,7 +41,6 @@ app.get('/posts', async (req, res) => {
 app.post('/posts', async (req, res) => {
    try {
       const { titulo, url, descripcion } = req.body;
-      console.log(titulo, url, descripcion);
       if (!titulo || !url || !descripcion) {
          const respuesta = {
             status: 'Faltan datos',
@@ -54,8 +53,14 @@ app.post('/posts', async (req, res) => {
       } else {
          const post = { titulo, url, descripcion };
          const nuevoPost = await crearPost(post);
-         // res.json(nuevoPost);
-         res.status(200).json({ data: nuevoPost });
+         const respuesta = {
+            status: 'Registro creado',
+            msg: 'Registro creado con éxito.',
+            error: false,
+         };
+         res.json({
+            respuesta,
+         });
       }
    } catch (error) {
       console.log('Error al crear el post: ', error);

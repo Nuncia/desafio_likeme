@@ -65,14 +65,18 @@ function App() {
                />
             </div>
             <div className="col-12 col-sm-8 px-5 row posts align-items-start">
-               {posts.map((post, i) => (
-                  <Post
-                     key={i}
-                     post={post}
-                     like={like}
-                     eliminarPost={eliminarPost}
-                  />
-               ))}
+               {posts.length > 0 ? (
+                  posts.map((post, i) => (
+                     <Post
+                        key={i}
+                        post={post}
+                        like={like}
+                        eliminarPost={eliminarPost}
+                     />
+                  ))
+               ) : (
+                  <p>No existen post</p>
+               )}
             </div>
          </div>
       </div>

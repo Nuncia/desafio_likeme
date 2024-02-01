@@ -5,10 +5,10 @@ import dotenv from 'dotenv/config';
 const { Pool } = pk;
 
 export const pool = new Pool({
-   user: 'postgres',
-   host: 'localhost',
-   database: 'likeme',
-   password: '',
+   user: DB_USER,
+   host: DB_HOST,
+   database: DB_DATABASE,
+   password: DB_PASSWORD,
    port: 5433,
    allowExitOnIdle: true,
 });
