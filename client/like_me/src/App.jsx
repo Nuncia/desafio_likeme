@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Form from './components/Form';
 import Post from './components/Post';
+import { response } from 'express';
 // import { axios } from 'axios';
 
 const urlBaseServer = 'http://localhost:3001';
@@ -13,19 +14,37 @@ function App() {
    const [posts, setPosts] = useState([]);
 
    const getPosts = async () => {
-      const posts = await axios.get(urlBaseServer + '/posts');
-      console.log('getPosts: ', posts);
+      axios
+         .get('http://localhost:3001/posts')
+         .then((response) => {
+            const arreglo = response.data?.posts;
+            if (response.data?.posts) {
+               setPosts([...arreglo]);
+            }
+         })
+         .catch((error) => {
+            console.log(error);
+         });
 
-      setPosts([...posts.data]);
+      // const { data: posts } = await axios.get(urlBaseServer + '/posts');
+      // console.log('getPosts: ', posts);
+      // setPosts([...posts]);
    };
 
    const agregarPost = async () => {
       const post = { titulo, imgSrc, descripcion };
-      console.log(post);
-      await axios.post(urlBaseServer + '/posts', post);
-      // console.log(respuesta);
-      getPosts();
+      axios.post(`http://localhost:3001/posts`, post).then((response) => {
+         console.log(response.data);
+      });
    };
+
+   // const agregarPost = async () => {
+   //    const post = { titulo, imgSrc, descripcion };
+   //    console.log(post);
+   //    const respuesta = await axios.post(urlBaseServer + '/posts', post);
+   //    console.log(respuesta);
+   //    getPosts();
+   // };
 
    // const agregarPost = async () => {
    //    try {
